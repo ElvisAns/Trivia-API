@@ -36,7 +36,7 @@ class TriviaTestCase(unittest.TestCase):
 
     def test_endpoint_to_list_categories_should_return_valid_response(self):
         req = self.client().get("/api/v1/categories")
-        data = req.data
+        data = json.loads(req.data)
         self.assertEqual(200,req.status_code)
         self.assertIn("categories",data)
         self.assertIsNotNone(data["categories"])
