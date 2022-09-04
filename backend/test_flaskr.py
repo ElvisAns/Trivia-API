@@ -34,6 +34,13 @@ class TriviaTestCase(unittest.TestCase):
     Write at least one test for each test for successful operation and for expected errors.
     """
 
+    def test_endpoint_to_list_categories_should_return_valid_response(self):
+        req = self.client().get("/api/v1/categories")
+        data = req.data
+        self.assertEqual(200,req.status_code)
+        self.assertIn("categories",data)
+        self.assertIsNotNone(data["categories"])
+
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
