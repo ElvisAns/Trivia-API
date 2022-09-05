@@ -1,4 +1,5 @@
 import os
+from unicodedata import category
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
@@ -34,10 +35,14 @@ def create_app(test_config=None):
     @app.route("/api/v1/categories", methods=['GET'])
     def list_categories():
         try:
-            cat = [cat[0] for cat in db.session.query(Category.type).all()]
+            raw_data = [[cat[1],cat[0]] for cat in db.session.query(Category.id,Category.type).all()]
+            categories = {}
+            for cat in raw_data:
+                categories[cat[1]]=cat[0]
+
             return jsonify({
                 "success": True,
-                "categories" : cat
+                "categories" : categories
             })
         except:
             return jsonify({
