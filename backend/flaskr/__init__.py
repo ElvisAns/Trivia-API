@@ -139,6 +139,39 @@ def create_app(test_config=None):
     of the questions list in the "List" tab.
     """
 
+    @app.route("/api/v1/questions", methods=['POST'])
+    def save_new_question():
+        try:
+            data = request.json
+
+            if "difficulty" not in data or "question" not in data or "answer" not in data or "category" not in data:
+                return jsonify({
+                    "message" : "Some informations are missing, can't process your request"
+                }),400
+            
+            difficulty = data["difficulty"]
+            question = data["question"]
+            category = data["category"]
+            answer = data["answer"]
+
+            if len(difficulty) and len(question) and len(category) and len(answer):
+                question = Question(question=question,answer=answer,difficulty=difficulty,category=category)
+                db.session.add(question)
+                db.session.commit()
+                return jsonify({
+                    "id" : question.id
+                })
+            else:
+                return jsonify({
+                    "message" : "Your datas seems to not be well formated, can't process your request"
+                }),400
+
+        except:
+            db.session.rollback()
+            return jsonify({
+                "message" : "Your datas seems to not be well formated, can't process your request"
+            }),400
+
     """
     @TODO:
     Create a POST endpoint to get questions based on a search term.
