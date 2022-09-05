@@ -62,6 +62,12 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data["id"],id)
         self.assertIsNone(question)
 
+    def test_delete_questions_shoud_not_succeed_for_inexistant_question(self):
+        id = 1022
+        req = self.client().delete(f"/api/v1/questions/{id}")
+        data = json.loads(req.data)
+        self.assertEqual(422,req.status_code)
+        
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
