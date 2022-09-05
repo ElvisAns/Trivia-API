@@ -150,11 +150,11 @@ def create_app(test_config=None):
                 answer = data["answer"]
 
                 if (isinstance(difficulty,int) and
-                    len(question)>5 and 
+                    len(question)>2 and 
                     isinstance(question,str) and 
                     isinstance(category,int) and 
                     isinstance(answer,str) and 
-                    len(answer)>5):
+                    len(answer)>2):
 
                         question = Question(question=question,answer=answer,difficulty=difficulty,category=category)
                         db.session.add(question)
