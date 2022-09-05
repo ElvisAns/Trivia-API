@@ -51,15 +51,17 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(data["currentCategory"])
     
     def test_delete_questions_shoud_be_permanent_to_db(self):
+        print("This test may fail for a second test attempt")
         id = 10
-        question  = Question.query.filter(Question.id==id).one_or_none()
-        self.assertIsNotNone(question)
+        question_with_data  = Question.query.filter(Question.id==id).one_or_none()
+        self.assertIsNotNone(question_with_data)
         req = self.client().delete(f"/api/v1/questions/{id}")
         data = json.loads(req.data)
         question  = Question.query.filter(Question.id==id).one_or_none()
         self.assertEqual(200,req.status_code)
         self.assertEqual(data["id"],id)
         self.assertIsNone(question)
+
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
