@@ -141,42 +141,45 @@ def create_app(test_config=None):
 
     @app.route("/api/v1/questions", methods=['POST'])
     def save_new_question():
-        try:
-            data = request.json
-            if data.get("difficulty") and data.get("question") and data.get("category") and data.get("difficulty"):
-                difficulty = int(data["difficulty"])
-                question = data["question"]
-                category = int(data["category"])
-                answer = data["answer"]
+        r = request.json
+        if r["searchTerm"] is None :
+            try:
+                data = request.json
+                if data.get("difficulty") and data.get("question") and data.get("category") and data.get("difficulty"):
+                    difficulty = int(data["difficulty"])
+                    question = data["question"]
+                    category = int(data["category"])
+                    answer = data["answer"]
 
-                if (difficulty >= 0 and
-                    difficulty <6 and
-                    len(question)>2 and 
-                    isinstance(question,str) and 
-                    category >= 0 and 
-                    isinstance(answer,str) and 
-                    len(answer)>2):
-
-                        question = Question(question=question,answer=answer,difficulty=difficulty,category=category)
-                        db.session.add(question)
-                        db.session.commit()
+                    if (difficulty >= 0 and
+                        difficulty <6 and
+                        len(question)>2 and 
+                        isinstance(question,str) and 
+                        category >= 0 and 
+                        isinstance(answer,str) and 
+                        len(answer)>2):
+                            question = Question(question=question,answer=answer,difficulty=difficulty,category=category)
+                            db.session.add(question)
+                            db.session.commit()
+                            return jsonify({
+                                "id" : question.id
+                            })
+                    else:
                         return jsonify({
-                            "id" : question.id
-                        })
+                            "message" : "Your datas seems to not be well formated, can't process your request"
+                        }),400
                 else:
                     return jsonify({
-                        "message" : "Your datas seems to not be well formated, can't process your request"
+                        "message" : "Some informations are missing, can't process your request"
                     }),400
-            else:
-                return jsonify({
-                    "message" : "Some informations are missing, can't process your request"
-                }),400
 
-        except:
-            db.session.rollback()
-            return jsonify({
-                "message" : "Your datas seems to not be well formated, can't process your request"
-            }),400
+            except:
+                db.session.rollback()
+                return jsonify({
+                    "message" : "Your datas seems to not be well formated, can't process your request"
+                }),400
+        else:
+            pass
 
     """
     @TODO:
