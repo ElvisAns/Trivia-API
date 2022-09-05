@@ -144,15 +144,16 @@ def create_app(test_config=None):
         try:
             data = request.json
             if data.get("difficulty") and data.get("question") and data.get("category") and data.get("difficulty"):
-                difficulty = data["difficulty"]
+                difficulty = int(data["difficulty"])
                 question = data["question"]
-                category = data["category"]
+                category = int(data["category"])
                 answer = data["answer"]
 
-                if (isinstance(difficulty,int) and
+                if (difficulty >= 0 and
+                    difficulty <6 and
                     len(question)>2 and 
                     isinstance(question,str) and 
-                    isinstance(category,int) and 
+                    category >= 0 and 
                     isinstance(answer,str) and 
                     len(answer)>2):
 
