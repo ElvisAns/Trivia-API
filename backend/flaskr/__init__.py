@@ -49,7 +49,7 @@ def create_app(test_config=None):
             return jsonify({
                 "success": False,
                 "message" : "An error occured while processing your request"
-            }),500
+            }),422
 
         
 
@@ -110,6 +110,23 @@ def create_app(test_config=None):
     TEST: When you click the trash icon next to a question, the question will be removed.
     This removal will persist in the database and when you refresh the page.
     """
+
+    @app.route("/api/v1/questions/<int:question_id>", methods=['DELETE'])
+    def delete_a_question(question_id):
+        question = Question.query.get(question_id)
+        try:
+            db.session.delete(question)
+            db.session.commit()
+            return jsonify({
+                "success" : True,
+                "id" : question_id
+            })
+        except:
+            db.session.rollback()
+            return jsonify({
+                "success" : False
+            }),422
+
 
     """
     @TODO:
