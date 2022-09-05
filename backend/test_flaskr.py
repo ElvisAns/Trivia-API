@@ -46,7 +46,7 @@ class TriviaTestCase(unittest.TestCase):
         data = json.loads(req.data)
         self.assertEqual(200,req.status_code)
         self.assertTrue(data["questions"])
-        self.assertGreaterEqual(1,data["totalQuestions"])
+        self.assertGreaterEqual(data["totalQuestions"],1)
         self.assertTrue(data["categories"])
         self.assertTrue(data["currentCategory"])
         
