@@ -103,7 +103,7 @@ You can optionally update this game play to increase the number of questions or 
       "category": 2
     }
   ],
-  "totalQuestions": 100,
+  "total_questions": 100,
   "categories": {
     "1": "Science",
     "2": "Art",
