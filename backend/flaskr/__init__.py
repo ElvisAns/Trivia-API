@@ -85,7 +85,7 @@ def create_app(test_config=None):
                 "currentCategory": "History"
             }),404
 
-        questions = [[question.format()] for question in Question.query.offset(offset).limit(limit).all()]
+        questions = [question.format() for question in Question.query.offset(offset).limit(limit).all()]
 
         if len(questions) < 1 :
             return jsonify({
