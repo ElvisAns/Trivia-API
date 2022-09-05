@@ -143,20 +143,25 @@ def create_app(test_config=None):
     def save_new_question():
         try:
             data = request.json
-            print(data)
             if data.get("difficulty") and data.get("question") and data.get("category") and data.get("difficulty"):
                 difficulty = data["difficulty"]
                 question = data["question"]
                 category = data["category"]
                 answer = data["answer"]
 
-                if isinstance(difficulty,int) and len(question)>5 and isinstance(question,str) and isinstance(category,int) and isinstance(answer,str) and len(answer)>5:
-                    question = Question(question=question,answer=answer,difficulty=difficulty,category=category)
-                    db.session.add(question)
-                    db.session.commit()
-                    return jsonify({
-                        "id" : question.id
-                    })
+                if (isinstance(difficulty,int) and
+                    len(question)>5 and 
+                    isinstance(question,str) and 
+                    isinstance(category,int) and 
+                    isinstance(answer,str) and 
+                    len(answer)>5):
+
+                        question = Question(question=question,answer=answer,difficulty=difficulty,category=category)
+                        db.session.add(question)
+                        db.session.commit()
+                        return jsonify({
+                            "id" : question.id
+                        })
                 else:
                     return jsonify({
                         "message" : "Your datas seems to not be well formated, can't process your request"
