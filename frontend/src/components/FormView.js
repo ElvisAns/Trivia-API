@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import '../stylesheets/FormView.css';
+import toast from 'toast-me';
 
 class FormView extends Component {
   constructor(props) {
@@ -44,6 +45,7 @@ class FormView extends Component {
       }),
       crossDomain: true,
       success: (result) => {
+        toast('Success! The question has been saved')
         document.getElementById('add-question-form').reset();
         return;
       },
