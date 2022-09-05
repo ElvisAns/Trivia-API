@@ -89,7 +89,20 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(400,req.status_code)
         self.assertEqual("Your datas seems to not be well formated, can't process your request",data.message)
     
-    
+    def test_add_new_question_should_save_post(self):
+        req = self.client().post("/api/v1/questions",json={
+            "question": "Who is the president of Congo DR",
+            "answer": "Felix Tshisekedi",
+            "difficulty": 2,
+            "category" : 5
+        })
+        data = json.loads(req.data)
+        self.assertEqual(200,req.status_code)
+        self.assertIn("id",data)
+        id = data["id"]
+        quest = Question.query.filter(Question.id==id).one_or_none()
+        self.assertIsNotNone(quest)
+
         
 # Make the tests conveniently executable
 if __name__ == "__main__":
