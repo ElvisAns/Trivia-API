@@ -39,9 +39,17 @@ class TriviaTestCase(unittest.TestCase):
         data = json.loads(req.data)
         self.assertEqual(200,req.status_code)
         self.assertIn("categories",data)
-        self.assertIsNotNone(data["categories"])
+        self.assertTrue(data["categories"])
 
-
+    def test_get_questions_should_return_valid_response(self):
+        req = self.client().get("/api/v1/questions")
+        data = json.loads(req.data)
+        self.assertEqual(200,req.status_code)
+        self.assertTrue(data["questions"])
+        self.assertGreaterEqual(1,data["totalQuestions"])
+        self.assertTrue(data["categories"])
+        self.assertTrue(data["currentCategory"])
+        
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
