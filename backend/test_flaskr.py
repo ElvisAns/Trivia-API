@@ -102,6 +102,35 @@ class TriviaTestCase(unittest.TestCase):
         id = data["id"]
         quest = Question.query.filter(Question.id==id).one_or_none()
         self.assertIsNotNone(quest)
+    
+    def test_search_question_should_appear_in_result(self):
+        res = self.client().post('/api/v1/questions',json={"searchTerm":"What"})
+        data = json.loads(res.data)
+        self.assertEqual(200, res.status_code)
+        self.assertGreaterEqual(1,len(data["questions"]))
+        self.assertIn("What",data["questions"][0]["questions"])
+
+            
+    def test_search_question_should_be_case_insensitive(self):
+        res = self.client().post('/api/v1/questions',json={"searchTerm":"wHAt"})
+        data = json.loads(res.data)
+        self.assertEqual(200, res.status_code)
+        self.assertGreaterEqual(1,len(data["questions"]))
+        self.assertIn("What",data["questions"][0]["questions"])
+
+               
+    def test_search_question_should_match_anysubstring(self):
+        res = self.client().post('/api/v1/questions',json={"searchTerm":"hat"})
+        data = json.loads(res.data)
+        self.assertEqual(200, res.status_code)
+        self.assertGreaterEqual(1,len(data["questions"]))
+        self.assertIn("What",data["questions"][0]["questions"])
+
+    
+    def search_inexitant_title_should_return_empty(self):
+        res = self.client().post('/api/v1/questions',json={"searchTerm":"ffadhlsjqpwirriirjfneewiq"})
+        data = json.loads(res.data)
+        self.assertEqual(404, res.status_code)
 
         
 # Make the tests conveniently executable
