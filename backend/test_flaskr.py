@@ -42,7 +42,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(data["categories"])
 
     def test_get_questions_should_return_valid_response(self):
-        req = self.client().get("/api/v1/questions")
+        req = self.client().get("/api/v1/questions?page=1")
         data = json.loads(req.data)
         self.assertEqual(200,req.status_code)
         self.assertTrue(data["questions"])
