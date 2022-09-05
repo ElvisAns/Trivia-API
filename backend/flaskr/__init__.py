@@ -44,7 +44,7 @@ def create_app(test_config=None):
                 "success": True,
                 "categories" : categories
             })
-            
+
         except:
             return jsonify({
                 "success": False,
@@ -66,6 +66,42 @@ def create_app(test_config=None):
     ten questions per page and pagination at the bottom of the screen for three pages.
     Clicking on the page numbers should update the questions.
     """
+    @app.route("/api/v1/questions", methods=['GET'])
+    def get_questions_with_pagination():
+        page = request.args.get('page',1,int)
+        limit = 10
+        offset = (page - 1) * limit
+
+        raw_data = [[cat[1],cat[0]] for cat in db.session.query(Category.id,Category.type).all()]
+        categories = {}
+        for cat in raw_data:
+            categories[cat[1]]=cat[0]
+        
+        if(page<1):
+            return jsonify({
+                "questions": [],
+                "totalQuestions": Question.query.count(),
+                "categories":categories,
+                "currentCategory": "History"
+            }),404
+
+        questions = [[question.format()] for question in Question.query.offset(offset).limit(limit).all()]
+
+        if len(questions) < 1 :
+            return jsonify({
+                "questions": [],
+                "totalQuestions": Question.query.count(),
+                "categories":categories,
+                "currentCategory": "History"
+            }),404
+
+        
+        return jsonify({
+            "questions": questions,
+            "totalQuestions": Question.query.count(),
+            "categories" : categories,
+            "currentCategory": "History"
+        })
 
     """
     @TODO:
