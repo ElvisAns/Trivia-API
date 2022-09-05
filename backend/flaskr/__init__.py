@@ -80,7 +80,7 @@ def create_app(test_config=None):
         if(page<1):
             return jsonify({
                 "questions": [],
-                "totalQuestions": Question.query.count(),
+                "total_questions": Question.query.count(),
                 "categories":categories,
                 "currentCategory": "History"
             }),404
@@ -90,7 +90,7 @@ def create_app(test_config=None):
         if len(questions) < 1 :
             return jsonify({
                 "questions": [],
-                "totalQuestions": Question.query.count(),
+                "total_questions": Question.query.count(),
                 "categories":categories,
                 "currentCategory": "History"
             }),404
@@ -98,7 +98,7 @@ def create_app(test_config=None):
         
         return jsonify({
             "questions": questions,
-            "totalQuestions": Question.query.count(),
+            "total_questions": Question.query.count(),
             "categories" : categories,
             "currentCategory": "History"
         })
