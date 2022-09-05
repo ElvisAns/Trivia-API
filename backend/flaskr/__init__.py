@@ -44,6 +44,7 @@ def create_app(test_config=None):
                 "success": True,
                 "categories" : categories
             })
+            
         except:
             return jsonify({
                 "success": False,
