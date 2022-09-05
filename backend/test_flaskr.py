@@ -78,13 +78,18 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(400,req.status_code)
         self.assertEqual("Some informations are missing, can't process your request",data.message)
 
-    def test_add_new_question_should_validate_form_json_datas(self):
+    def test_add_new_question_should_validate_json_datas(self):
         req = self.client().post("/api/v1/questions",json={
             "question": "Heres a new question string",
-            "answer": "Heres a new answer string",
-            "difficulty": 1,
+            "answer": 1,
+            "difficulty": "Easy",
+            "category" : 2
         })
+        data = json.loads(req.data)
         self.assertEqual(400,req.status_code)
+        self.assertEqual("Your datas seems to not be well formated, can't process your request",data.message)
+    
+    
         
 # Make the tests conveniently executable
 if __name__ == "__main__":
