@@ -67,6 +67,24 @@ class TriviaTestCase(unittest.TestCase):
         req = self.client().delete(f"/api/v1/questions/{id}")
         data = json.loads(req.data)
         self.assertEqual(422,req.status_code)
+    
+    def test_add_new_question_should_check_required_datas(self):
+        req = self.client().post("/api/v1/questions",json={
+            "question": "Heres a new question string",
+            "answer": "Heres a new answer string",
+            "difficulty": 1,
+        })
+        data = json.loads(req.data)
+        self.assertEqual(400,req.status_code)
+        self.assertEqual("Some informations are missing, can't process your request",data.message)
+
+    def test_add_new_question_should_validate_form_json_datas(self):
+        req = self.client().post("/api/v1/questions",json={
+            "question": "Heres a new question string",
+            "answer": "Heres a new answer string",
+            "difficulty": 1,
+        })
+        self.assertEqual(400,req.status_code)
         
 # Make the tests conveniently executable
 if __name__ == "__main__":
