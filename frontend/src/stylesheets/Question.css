@@ -62,6 +62,10 @@ span.page-num {
   font-size: 16px;
 }
 
+span.page-num {
+  cursor: pointer;
+}
+
 span.page-num.active {
   color: blue;
 }
