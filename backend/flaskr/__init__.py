@@ -281,7 +281,31 @@ def create_app(test_config=None):
                 "message" : "Your datas seems to not be well formated, can't process your request"
             }),400
 
-
+    @app.errorhandler(404)
+    def func_404(error):
+        return jsonify({
+            "message" : "Ressource could not be found on the server"
+        }),404
+    
+    @app.errorhandler(422)
+    def func_422(error):
+        return jsonify({
+            "message" : "The server was not able to process your request"
+        }),422
+    
+    @app.errorhandler(405)
+    def func_405(error):
+        return jsonify({
+            "message" : "HTTP Method not allowed for this route"
+        }),405
+    
+    @app.errorhandler(500)
+    def func_500(error):
+        return jsonify({
+            "message" : "An error occured on the server while processing your request"
+        }),500
+    
+    
     """
     @TODO:
     Create error handlers for all expected errors
