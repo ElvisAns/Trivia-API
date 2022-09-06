@@ -260,15 +260,12 @@ def create_app(test_config=None):
             categ = req["quizz_category"]["id"]
             if(categ==0): #get quizz from all categ
                 all = [q.id for q in Question.query.all()]
-
             elif(categ>0 and categ<6):
-                pass
+                all = [q.id for q in Question.query.filterby(category=categ).all()]
             else:
                 raise Exception("Invalid Category")
-
             filtered = list(filter(lambda q_id : q_id not in exclude , all))
             pos = randrange(0,len(filtered))
-
             quizz = [question.format() for question in Question.query.get(filtered[pos])]
             
         except Exception as e:
