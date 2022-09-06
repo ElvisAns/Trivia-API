@@ -225,9 +225,17 @@ def create_app(test_config=None):
 
     @app.route("/api/v1/categories/<int:category_id>/questions",methods=['GET'])
     def get_questions_per_category(category_id):
+        categ = Category.query.get(category_id)
+        if categ is None:
+            return jsonify({
+                "message":"Could not found the specified category"
+            }),404
+
         questions = [question.format() for question in Question.query.join(Category,Question.category==Category.id).filter(Question.category==category_id).all()]
         return jsonify({
-            "questions":questions
+            "total_questions": Question.query.count(),
+            "questions":questions,
+            "currentCategory":categ.type
         })
 
     """
