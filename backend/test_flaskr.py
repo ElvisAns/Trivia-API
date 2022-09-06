@@ -155,13 +155,29 @@ class TriviaTestCase(unittest.TestCase):
         q = [5, 9, 12, 6]
         req = self.client().post("/api/v1/quizzes",json={
             'previous_questions': q,
-            'quiz_category': 'History'
+            'quiz_category':  {
+                "type": "click",
+                "id": 0
+            }
         })
         data =  json.loads(req.data)
         self.assertEqual(200,req.status_code)
         self.assertEqual(1,len(data))
         for q_id in q:
             self.assertNotEqual(q_id,data["question"]["id"])
+
+    def test_quizz_endpoint_should_return_no_question_when_all_where_asked(self):
+        r = range(1,50)
+        q = list(r)
+        req = self.client().post("/api/v1/quizzes",json={
+            'previous_questions': q,
+            'quiz_category':  {
+                "type": "click",
+                "id": 0
+            }
+        })
+        data =  json.loads(req.data)
+        self.assertEqual(205,req.status_code)
             
 # Make the tests conveniently executable
 if __name__ == "__main__":

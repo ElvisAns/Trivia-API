@@ -272,6 +272,10 @@ def create_app(test_config=None):
                 return jsonify({
                     "question" : quizz
                 })
+            else:
+                return jsonify({
+                    "message" : "There's no more question left for this category"
+                }),205
         except :
             return jsonify({
                 "message" : "Your datas seems to not be well formated, can't process your request"
