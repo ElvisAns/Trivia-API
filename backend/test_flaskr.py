@@ -138,10 +138,18 @@ class TriviaTestCase(unittest.TestCase):
         res = self.client().get(f"/api/v1/categories/{catID}/questions")
         data = json.loads(res.data)
         self.assertEqual(200,res.status_code)
-        questions = [questions["question"] for questions in data["questions"][0]]
+        questions_ob = [questions for questions in data["questions"]]
+        questions_only=[]
+        for quest in questions_ob:
+            questions_only.append(quest["question"])
         self.assertEqual(200,res.status_code)
-        self.assertIn("La Giaconda is better known as what?",questions)
-        self.assertNotIn("What boxer's original name is Cassius Clay?",questions)
+        self.assertIn("La Giaconda is better known as what?",questions_only)
+        self.assertNotIn("What boxer's original name is Cassius Clay?",questions_only)
+    
+    def test_get_question_for_not_existing_category(self):
+        catID = 2302
+        res = self.client().get(f"/api/v1/categories/{catID}/questions")
+        self.assertEqual(404,res.status_code)
         
 # Make the tests conveniently executable
 if __name__ == "__main__":
