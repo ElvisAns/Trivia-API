@@ -142,7 +142,7 @@ def create_app(test_config=None):
     @app.route("/api/v1/questions", methods=['POST'])
     def question_process():
         r = request.json
-        if r["searchTerm"] is None :
+        if "searchTerm" not in r:
             try:
                 data = request.json
                 if data.get("difficulty") and data.get("question") and data.get("category") and data.get("difficulty"):
