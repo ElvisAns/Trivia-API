@@ -107,7 +107,7 @@ class TriviaTestCase(unittest.TestCase):
         res = self.client().post('/api/v1/questions',json={"searchTerm":"What"})
         data = json.loads(res.data)
         self.assertEqual(200, res.status_code)
-        self.assertGreaterEqual(1,len(data["questions"]))
+        self.assertTrue(data["questions"])
         self.assertIn("What",data["questions"][0]["questions"])
 
             
@@ -115,7 +115,7 @@ class TriviaTestCase(unittest.TestCase):
         res = self.client().post('/api/v1/questions',json={"searchTerm":"wHAt"})
         data = json.loads(res.data)
         self.assertEqual(200, res.status_code)
-        self.assertGreaterEqual(1,len(data["questions"]))
+        self.assertTrue(data["questions"])
         self.assertIn("What",data["questions"][0]["questions"])
 
                
@@ -123,14 +123,15 @@ class TriviaTestCase(unittest.TestCase):
         res = self.client().post('/api/v1/questions',json={"searchTerm":"hat"})
         data = json.loads(res.data)
         self.assertEqual(200, res.status_code)
-        self.assertGreaterEqual(1,len(data["questions"]))
+        self.assertTrue(data["questions"])
         self.assertIn("What",data["questions"][0]["questions"])
 
     
     def search_inexitant_title_should_return_empty(self):
         res = self.client().post('/api/v1/questions',json={"searchTerm":"ffadhlsjqpwirriirjfneewiq"})
         data = json.loads(res.data)
-        self.assertEqual(404, res.status_code)
+        self.assertEqual(200, res.status_code)
+        self.assertFalse(data["questions"])
 
         
 # Make the tests conveniently executable
