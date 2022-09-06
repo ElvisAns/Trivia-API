@@ -167,7 +167,7 @@ class TriviaTestCase(unittest.TestCase):
             self.assertNotEqual(q_id,data["question"]["id"])
 
     def test_quizz_endpoint_should_return_no_question_when_all_where_asked(self):
-        r = range(1,60)
+        r = range(1,40)
         q = list(r)
         req = self.client().post("/api/v1/quizzes",json={
             'previous_questions': q,
@@ -178,6 +178,15 @@ class TriviaTestCase(unittest.TestCase):
         })
         data =  json.loads(req.data)
         self.assertFalse(data["question"])
+    
+    def test_inexistant_route(self):
+        req = self.client().get("/api/v2/quiz")
+        self.assertEqual(404,req.status_code)
+    
+    def test_not_allowed_method(self):
+        req = self.client().patch("/api/v1/quizzes")
+        self.assertEqual(405,req.status_code)
+
             
 # Make the tests conveniently executable
 if __name__ == "__main__":
