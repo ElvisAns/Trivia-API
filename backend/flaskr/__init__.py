@@ -82,7 +82,7 @@ def create_app(test_config=None):
                 "questions": [],
                 "total_questions": Question.query.count(),
                 "categories":categories,
-                "currentCategory": "History"
+                "currentCategory": "-"
             }),404
 
         questions = [question.format() for question in Question.query.offset(offset).limit(limit).all()]
@@ -92,7 +92,7 @@ def create_app(test_config=None):
                 "questions": [],
                 "total_questions": Question.query.count(),
                 "categories":categories,
-                "currentCategory": "History"
+                "currentCategory": "-"
             }),404
 
         
@@ -100,7 +100,7 @@ def create_app(test_config=None):
             "questions": questions,
             "total_questions": Question.query.count(),
             "categories" : categories,
-            "currentCategory": "History"
+            "currentCategory": "-"
         })
 
     """
@@ -140,7 +140,7 @@ def create_app(test_config=None):
     """
 
     @app.route("/api/v1/questions", methods=['POST'])
-    def save_new_question():
+    def question_process():
         r = request.json
         if r["searchTerm"] is None :
             try:
@@ -179,18 +179,40 @@ def create_app(test_config=None):
                     "message" : "Your datas seems to not be well formated, can't process your request"
                 }),400
         else:
-            pass
+            """
+            @TODO:
+            Create a POST endpoint to get questions based on a search term.
+            It should return any questions for whom the search term
+            is a substring of the question.
 
-    """
-    @TODO:
-    Create a POST endpoint to get questions based on a search term.
-    It should return any questions for whom the search term
-    is a substring of the question.
+            TEST: Search by any phrase. The questions list will update to include
+            only question that include that string within their question.
+            Try using the word "title" to start.
+            """
+            raw_data = [[cat[1],cat[0]] for cat in db.session.query(Category.id,Category.type).all()]
+            categories = {}
+            for cat in raw_data:
+                categories[cat[1]]=cat[0]
+            
 
-    TEST: Search by any phrase. The questions list will update to include
-    only question that include that string within their question.
-    Try using the word "title" to start.
-    """
+            questions = [question.format() for question in Question.query.filter(Question.question.ilike("%"+r["searchTerm"]+"%")).all()]
+
+            if len(questions) < 1 :
+                return jsonify({
+                    "questions": [],
+                    "total_questions": Question.query.count(),
+                    "categories":categories,
+                    "currentCategory": "-"
+                }),404
+
+            
+            return jsonify({
+                "questions": questions,
+                "total_questions": Question.query.count(),
+                "categories" : categories,
+                "currentCategory": "-"
+            })
+
 
     """
     @TODO:
