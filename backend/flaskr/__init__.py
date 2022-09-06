@@ -260,7 +260,7 @@ def create_app(test_config=None):
             categ = int(req["quiz_category"]["id"])
             if(categ==0): #get quizz from all categ
                 all = [q.id for q in db.session.query(Question.id).all()]
-            elif(categ>0 and categ<6):
+            elif(categ>0 and categ<=6):
                 all = [q.id for q in db.session.query(Question.id).filter(Question.category==categ).all()]
             else:
                 raise Exception("Invalid Category")
@@ -274,7 +274,7 @@ def create_app(test_config=None):
                 })
             else:
                 return jsonify({
-                    "message" : "There's no more question left for this category"
+                    "question" : []
                 }),205
         except :
             return jsonify({
