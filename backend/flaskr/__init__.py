@@ -1,9 +1,11 @@
+from itertools import count
 import os
 from unicodedata import category
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import random
+from random import randrange
 
 from models import setup_db, Question, db, Category
 
@@ -249,6 +251,24 @@ def create_app(test_config=None):
     one question at a time is displayed, the user is allowed to answer
     and shown whether they were correct or not.
     """
+
+    @app.route("/api/v1/quizzes",methods=['POST'])
+    def get_nex_quizz():
+        try:
+            req = request.json
+            exclude = req["previous_questions"]
+            all = [q.id for q in Question.query.all()]
+            filtered = list(filter(lambda q_id : q_id not in exclude , all))
+            pos = randrange(0,len(filtered))
+            return jsonify(pos)
+            if(req["quizz_category"]["id"]==0): #get quizz from all categ
+                pass
+        except Exception as e:
+            print(e)
+            return jsonify({
+                "message" : "Your datas seems to not be well formated, can't process your request"
+            }),400
+
 
     """
     @TODO:
