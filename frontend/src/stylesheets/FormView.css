@@ -1,7 +1,31 @@
 .form-view > label {
-  padding: 0px 0px 10px;
+  padding: 4px 0px;
+}
+
+.form-view{
+  width: 280px;
 }
 
 #add-form {
   text-align: center;
+}
+
+label {
+  text-align: left;
+}
+
+input,select {
+  width: 100%;
+  height: 23px;
+}
+
+select{
+  height: 34px;
+}
+
+input[type="submit"] {
+  margin:20px;
+  height: 50px;
+  cursor: pointer;
+  width: 120px;
 }
