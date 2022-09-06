@@ -108,7 +108,7 @@ class TriviaTestCase(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(200, res.status_code)
         self.assertTrue(data["questions"])
-        self.assertIn("What",data["questions"][0]["questions"])
+        self.assertIn("What",data["questions"][0]["question"])
 
             
     def test_search_question_should_be_case_insensitive(self):
@@ -116,7 +116,7 @@ class TriviaTestCase(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(200, res.status_code)
         self.assertTrue(data["questions"])
-        self.assertIn("What",data["questions"][0]["questions"])
+        self.assertIn("What",data["questions"][0]["question"])
 
                
     def test_search_question_should_match_anysubstring(self):
@@ -124,7 +124,7 @@ class TriviaTestCase(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(200, res.status_code)
         self.assertTrue(data["questions"])
-        self.assertIn("What",data["questions"][0]["questions"])
+        self.assertIn("What",data["questions"][0]["question"])
 
     
     def search_inexitant_title_should_return_empty(self):
