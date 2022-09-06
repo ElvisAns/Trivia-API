@@ -13,6 +13,7 @@ class Header extends Component {
           onClick={() => {
             this.navTo('');
           }}
+          style={{"cursor":"pointer"}}
         >
           Udacitrivia
         </h1>
@@ -20,6 +21,7 @@ class Header extends Component {
           onClick={() => {
             this.navTo('');
           }}
+          style={{"cursor":"pointer"}}
         >
           List
         </h2>
@@ -27,6 +29,7 @@ class Header extends Component {
           onClick={() => {
             this.navTo('/add');
           }}
+          style={{"cursor":"pointer"}}
         >
           Add
         </h2>
@@ -34,6 +37,7 @@ class Header extends Component {
           onClick={() => {
             this.navTo('/play');
           }}
+          style={{"cursor":"pointer"}}
         >
           Play
         </h2>

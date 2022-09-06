@@ -68,8 +68,11 @@ class QuizView extends Component {
         });
         return;
       },
-      error: (error) => {
-        this.setState({forceEnd:true});
+      error: (error,status_text) => {
+        if(status_text==="parsererror") {
+          this.setState({forceEnd:true});
+          return;
+        }
         toast('Unable to load question. Please try your request again');
         return;
       },

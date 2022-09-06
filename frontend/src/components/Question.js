@@ -29,11 +29,13 @@ class Question extends Component {
             src='delete.png'
             alt='delete'
             className='delete'
+            style={{"cursor":"pointer"}}
             onClick={() => this.props.questionAction('DELETE')}
           />
         </div>
         <div
           className='show-answer button'
+          style={{"cursor":"pointer"}}
           onClick={() => this.flipVisibility()}
         >
           {this.state.visibleAnswer ? 'Hide' : 'Show'} Answer
