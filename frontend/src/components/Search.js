@@ -24,7 +24,8 @@ class Search extends Component {
           ref={(input) => (this.search = input)}
           onChange={this.handleInputChange}
         />
-        <input type='submit' value='Submit' className='button' />
+        <input type='submit' value='Submit' className='button' 
+          style={{"cursor":"pointer"}} />
       </form>
     );
   }
