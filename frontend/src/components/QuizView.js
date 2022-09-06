@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import '../stylesheets/QuizView.css';
-
+import toast from 'toast-me';
 const questionsPerPlay = 5;
 
 class QuizView extends Component {
@@ -49,7 +49,7 @@ class QuizView extends Component {
     }
 
     $.ajax({
-      url: '/quizzes', //TODO: update request URL
+      url: '//127.0.0.1:5000/api/v1/quizzes', //TODO: update request URL
       type: 'POST',
       dataType: 'json',
       contentType: 'application/json',
@@ -57,9 +57,6 @@ class QuizView extends Component {
         previous_questions: previousQuestions,
         quiz_category: this.state.quizCategory,
       }),
-      xhrFields: {
-        withCredentials: true,
-      },
       crossDomain: true,
       success: (result) => {
         this.setState({
@@ -72,6 +69,7 @@ class QuizView extends Component {
         return;
       },
       error: (error) => {
+        if (error.statusCode === 205) toast("You have played all the question within this category")
         alert('Unable to load question. Please try your request again');
         return;
       },
