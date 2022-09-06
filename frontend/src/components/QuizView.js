@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import '../stylesheets/QuizView.css';
-import toast from 'toast-me';
+import toast from 'toast-me'
 const questionsPerPlay = 5;
 
 class QuizView extends Component {
@@ -69,8 +69,8 @@ class QuizView extends Component {
         return;
       },
       error: (error) => {
-        if (error.statusCode === 205) toast("You have played all the question within this category")
-        alert('Unable to load question. Please try your request again');
+        this.setState({forceEnd:true});
+        toast('Unable to load question. Please try your request again');
         return;
       },
     });
