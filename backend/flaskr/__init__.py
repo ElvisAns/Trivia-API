@@ -203,7 +203,7 @@ def create_app(test_config=None):
                     "total_questions": Question.query.count(),
                     "categories":categories,
                     "currentCategory": "-"
-                }),404
+                }),200
 
             
             return jsonify({
