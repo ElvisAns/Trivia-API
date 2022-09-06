@@ -127,7 +127,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertIn("What",data["questions"][0]["question"])
 
     
-    def search_inexitant_title_should_return_empty(self):
+    def test_search_inexitant_title_should_return_empty(self):
         res = self.client().post('/api/v1/questions',json={"searchTerm":"ffadhlsjqpwirriirjfneewiq"})
         data = json.loads(res.data)
         self.assertEqual(200, res.status_code)
