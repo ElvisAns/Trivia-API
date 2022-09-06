@@ -29,11 +29,6 @@ class TriviaTestCase(unittest.TestCase):
         """Executed after reach test"""
         pass
 
-    """
-    TODO
-    Write at least one test for each test for successful operation and for expected errors.
-    """
-
     def test_endpoint_to_list_categories_should_return_valid_response(self):
         req = self.client().get("/api/v1/categories")
         data = json.loads(req.data)
