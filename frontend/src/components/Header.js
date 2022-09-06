@@ -15,7 +15,7 @@ class Header extends Component {
           }}
           style={{"cursor":"pointer"}}
         >
-          Udacitrivia
+          Trivia Quiz
         </h1>
         <h2
           onClick={() => {
