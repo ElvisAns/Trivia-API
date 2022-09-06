@@ -257,19 +257,22 @@ def create_app(test_config=None):
         try:
             req = request.json
             exclude = req["previous_questions"]
-            categ = req["quizz_category"]["id"]
+            categ = int(req["quiz_category"]["id"])
             if(categ==0): #get quizz from all categ
-                all = [q.id for q in Question.query.all()]
+                all = [q.id for q in db.session.query(Question.id).all()]
             elif(categ>0 and categ<6):
-                all = [q.id for q in Question.query.filterby(category=categ).all()]
+                all = [q.id for q in db.session.query(Question.id).filter(Question.category==categ).all()]
             else:
                 raise Exception("Invalid Category")
             filtered = list(filter(lambda q_id : q_id not in exclude , all))
-            pos = randrange(0,len(filtered))
-            quizz = [question.format() for question in Question.query.get(filtered[pos])]
-            
-        except Exception as e:
-            print(e)
+            if filtered:
+                pos = randrange(0,len(filtered))
+                choosen_id = filtered[pos]
+                quizz = Question.query.get(choosen_id).format()
+                return jsonify({
+                    "question" : quizz
+                })
+        except :
             return jsonify({
                 "message" : "Your datas seems to not be well formated, can't process your request"
             }),400
