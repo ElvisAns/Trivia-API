@@ -150,7 +150,19 @@ class TriviaTestCase(unittest.TestCase):
         catID = 2302
         res = self.client().get(f"/api/v1/categories/{catID}/questions")
         self.assertEqual(404,res.status_code)
-        
+    
+    def test_quizz_endpoint(self):
+        q = [5, 9, 12, 6]
+        req = self.client().post("/api/v1/quizzes",json={
+            'previous_questions': q,
+            'quiz_category': 'History'
+        })
+        data =  json.loads(req.data)
+        self.assertEqual(200,req.status_code)
+        self.assertEqual(1,len(data))
+        for q_id in q:
+            self.assertNotEqual(q_id,data["question"]["id"])
+            
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
