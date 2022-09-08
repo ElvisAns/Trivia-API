@@ -192,7 +192,7 @@ POST /api/v1/questions
 
 ```
 
-#### Get all qquestions matching a search term
+#### Get all questions matching a search term
 
 ```http
 POST /api/v1/questions
@@ -247,5 +247,5 @@ React, Javascript, Python Flask, SQLAlchemy, PostgreSQL...
 
 
 ## 🚀 About Me
-I'm a full stack developer...
+I'm a generalist web developer & entrepreneur, driven by curiosity, positivity, and a can-do attitude;i like to code web application projects with various stack.
 
