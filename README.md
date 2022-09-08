@@ -238,7 +238,7 @@ POST /api/v1/questions
 
 
 ## 🛠 Built With
-React, Javascript, Python Flask, SQLAlchemy, PostgreSQL...
+React, Javascript, Python, Flask, SQLAlchemy ORM, PostgreSQL...
 
 
 ## Authors
