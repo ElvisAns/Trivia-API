@@ -1,57 +1,251 @@
-# API Development and Documentation Final Project
 
-## Trivia App
+# Trivia API
+
+Welcome!
+
+Trivia is a wonderful quiz game where a user is invited to 
+answer questions and get scored after!
+
+Questions are of any or choosen category.
+
+[Screencast](https://user-images.githubusercontent.com/35831811/188739899-bb3fa937-8c86-4125-b228-70903fc33cf7.webm)
+
+# Getting started
+
+The app implement both the api for all the functionalities 
+you need for a trivia game and additionaly a frontend that
+help you play the game on a graphical User interface.
+
+- For runing the backend (APi) please visit this [link](https://github.com/ElvisAns/Trivia-API/tree/main/frontend#readme)
+- For runing the frontend and actually test the app visit this [link](https://github.com/ElvisAns/Trivia-API/tree/main/backend#readme) 
+
+
+## API Reference
+
+#### Get all quiz categories
+
+```http
+GET /api/v1/categories
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| None | - | Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category|
+
+***Sample Response body***
+
+```json
+    {
+        "categories": {
+            "1": "Science",
+            "2": "Art",
+            "3": "Geography",
+            "4": "History",
+            "5": "Entertainment",
+            "6": "Sports"
+        }
+    }
+```
+#### Get paginated questions
+
+```http
+GET /api/v1/questions?page=${integer}
+```
+
+| Parameter | Type     | Description                |Returns|
+| :-------- | :------- | :------------------------- |:-------|
+| **Required:**  `page` | `integer` | Fetches a paginated set of questions, a total number of questions, all categories and current category string| An object with 10 paginated questions, total questions, object including all categories, and current category string|
+
+***Sample Response body***
+
+```json
+    {
+        "questions": [
+            {
+            "id": 1,
+            "question": "This is a question",
+            "answer": "This is an answer",
+            "difficulty": 5,
+            "category": 2
+            }
+        ],
+        "totalQuestions": 100,
+        "categories": {
+            "1": "Science",
+            "2": "Art",
+            "3": "Geography",
+            "4": "History",
+            "5": "Entertainment",
+            "6": "Sports"
+        },
+        "currentCategory": "History"
+    }
+```
+
+#### Get all question within a category
+
+```http
+GET /api/v1/categories/${id}/questions
+```
+
+| Parameter | Type     | Description                |Returns|
+| :-------- | :------- | :------------------------- |:-------|
+| **Required:**  `id` | `integer` | Fetches questions for a cateogry specified by id request argument | An object with questions for the specified category, total questions, and current category string|
+
+***Sample Response body***
+
+```json
+    {
+        "questions": [
+            {
+            "id": 1,
+            "question": "This is a question",
+            "answer": "This is an answer",
+            "difficulty": 5,
+            "category": 4
+            }
+        ],
+        "totalQuestions": 100,
+        "currentCategory": "History"
+    }
+```
+
+#### Delete a question
+
+```http
+DELETE /api/v1/questions/${id}
+```
+
+| Parameter | Type     | Description                |Returns|
+| :-------- | :------- | :------------------------- |:-------|
+| **Required:** `id` | `integer` | Deletes a specified question using the id of the question| The ID of the deleted question |
+
+***Sample Response body***
+
+```json
+
+    {
+        "success" : true,
+        "id" : 10
+    }
+```
+
+#### Get a random question to play the quiz
+
+```http
+POST /api/v1/quizzes
+```
+***Sample Request body***
+
+```json
+    {
+        "previous_questions": [1, 4, 20, 15],
+        "quiz_category": 'History'
+    }
+
+```
+
+| Param | Type     | Description                |Returns|
+| :-------- | ------- | :------------------------- |:-------|
+| **Required:** `The request body` | `json` |Sends a post request in order to get the next question| A single new question object|
+
+***Sample Response body***
+
+```json
+    {
+        "question": {
+            "id": 1,
+            "question": "This is a question",
+            "answer": "This is an answer",
+            "difficulty": 5,
+            "category": 4
+        }
+    }
+
+```
+#### Add new question
+
+```http
+POST /api/v1/questions
+```
+
+| Parameter | Type     | Description                |Returns|
+| :-------- | :------- | :------------------------- |:-------|
+| **Required:**  `Request Body` | `json` | Sends a post request in order to add a new question | The ID of the new question |
+
+***Sample Request body***
+
+```json
+    {
+        "question": "Heres a new question string",
+        "answer": "Heres a new answer string",
+        "difficulty": 1,
+        "category": 3
+    }
+```
+***Sample Response body***
+
+```json
+{
+  "id": 38
+}
+
+```
+
+#### Get all qquestions matching a search term
+
+```http
+POST /api/v1/questions
+```
+
+| Parameter | Type     | Description                |Returns|
+| :-------- | :------- | :------------------------- |:-------|
+| **Required:**  `Request Body` | `json` | Sends a post request in order to search for a specific question by search term | Any array of questions, a number of totalQuestions that met the search term and the current category string|
+
+***Sample Request body***
+
+```json
+{
+  "searchTerm": "this is the term the user is looking for"
+}
+```
+***Sample Response body***
+
+```json
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "This is a question",
+      "answer": "This is an answer",
+      "difficulty": 5,
+      "category": 5
+    }
+  ],
+  "totalQuestions": 100,
+  "currentCategory": "Entertainment"
+}
+
+```
+## Acknowledgements
+
+- [Udacity](udacity.com) And all the lecturers over there
+
+
+## Screenshots
 
 ![image](https://user-images.githubusercontent.com/35831811/188736562-ac8286a3-420f-4677-8531-282e9a0a0d56.png)
 
 
-Udacity is invested in creating bonding experiences for its employees and students. A bunch of team members got the idea to hold trivia on a regular basis and created a webpage to manage the trivia app and play the game, but their API experience is limited and still needs to be built out.
+## 🛠 Built With
+React, Javascript, Python Flask, SQLAlchemy, PostgreSQL...
 
-That's where you come in! Help them finish the trivia app so they can start holding trivia and seeing who's the most knowledgeable of the bunch. The application must:
 
-1. Display questions - both all questions and by category. Questions should show the question, category and difficulty rating by default and can show/hide the answer.
-2. Delete questions.
-3. Add questions and require that they include question and answer text.
-4. Search for questions based on a text query string.
-5. Play the quiz game, randomizing either all questions or within a specific category.
+## Authors
 
-Completing this trivia app will give you the ability to structure plan, implement, and test an API - skills essential for enabling your future applications to communicate with others.
+- [@ElvisAnsima](http://github.com/ElvisAns)
 
-## Starting and Submitting the Project
 
-[Fork](https://help.github.com/en/articles/fork-a-repo) the project repository and [clone](https://help.github.com/en/articles/cloning-a-repository) your forked repository to your machine. Work on the project locally and make sure to push all your changes to the remote repository before submitting the link to your repository in the Classroom.
-
-## About the Stack
-
-We started the full stack application for you. It is designed with some key functional areas:
-
-### Backend
-
-The [backend](./backend/README.md) directory contains a partially completed Flask and SQLAlchemy server. You will work primarily in `__init__.py` to define your endpoints and can reference models.py for DB and SQLAlchemy setup. These are the files you'd want to edit in the backend:
-
-1. `backend/flaskr/__init__.py`
-2. `backend/test_flaskr.py`
-
-> View the [Backend README](./backend/README.md) for more details.
-
-### Frontend
-
-The [frontend](./frontend/README.md) directory contains a complete React frontend to consume the data from the Flask server. If you have prior experience building a frontend application, you should feel free to edit the endpoints as you see fit for the backend you design. If you do not have prior experience building a frontend application, you should read through the frontend code before starting and make notes regarding:
-
-1. What are the end points and HTTP methods the frontend is expecting to consume?
-2. How are the requests from the frontend formatted? Are they expecting certain parameters or payloads?
-
-Pay special attention to what data the frontend is expecting from each API response to help guide how you format your API. The places where you may change the frontend behavior, and where you should be looking for the above information, are marked with `TODO`. These are the files you'd want to edit in the frontend:
-
-1. `frontend/src/components/QuestionView.js`
-2. `frontend/src/components/FormView.js`
-3. `frontend/src/components/QuizView.js`
-
-By making notes ahead of time, you will practice the core skill of being able to read and understand code and will have a simple plan to follow to build out the endpoints of your backend API.
-
-> View the [Frontend README](./frontend/README.md) for more details.
-
-### App demo
-
-[Screencast](https://user-images.githubusercontent.com/35831811/188739899-bb3fa937-8c86-4125-b228-70903fc33cf7.webm)
+## 🚀 About Me
+I'm a full stack developer...
 
