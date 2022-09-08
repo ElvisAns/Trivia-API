@@ -51,7 +51,7 @@ By making notes ahead of time, you will practice the core skill of being able to
 
 > View the [Frontend README](./frontend/README.md) for more details.
 
-###App demo
+### App demo
 
 [Screencast](https://user-images.githubusercontent.com/35831811/188739899-bb3fa937-8c86-4125-b228-70903fc33cf7.webm)
 
