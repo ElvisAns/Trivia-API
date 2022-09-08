@@ -140,7 +140,7 @@ POST /api/v1/quizzes
 ```json
     {
         "previous_questions": [1, 4, 20, 15],
-        "quiz_category": 'History'
+        "quiz_category": "History"
     }
 
 ```
